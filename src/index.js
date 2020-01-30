@@ -53,24 +53,37 @@ function createItem(newBreeds) {
     })
     document.querySelector('ul#dog-breeds').innerHTML = html;
    
-    let items = document.querySelector('.items');
+    let items = document.querySelectorAll('.items');
 
-    items.forEach(element => {
-        
-        element.addEventListener('click' ,function(e){
-            e.target.style.color = 'red';
-        });
-    })
+    for (const li of items) {
+        li.addEventListener('click', changeColor)
+    }
+
+    
 }
 
-function filterBreeds(){
-    const dropdown = document.getElementById("breed-dropdown");
-    var letter = dropdown.options[dropdown.selectedIndex].value;
-};
+function changeColor(item){
+    item.target.style.color = 'red';
+}
+
+
+
+function filterDogs(e){
+    
+    const items = document.querySelectorAll('.items');
+    for (const li of items) {
+        if(li.textContent[0] === e.target.value){
+            li.style.display = 'block'
+        } else {
+            li.style.display = 'none'
+        }
+    }
+    
+}
 document.addEventListener('DOMContentLoaded', function() {
     getImages();
     getBreeds();
-
-    
+    const dropdown = document.querySelector("#breed-dropdown")
+    dropdown.addEventListener("change", filterDogs)
 })
 
